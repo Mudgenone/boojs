@@ -80,12 +80,12 @@ bot.hears(/pai bessa/i, ctx => {
 
 bot.action(/ger/, async ctx => {
     ctx.session.perguntas = perguntas_array.filter(item => item.assunto == 'ger')
-    await ctx.reply(`${ctx.session.perguntas[0].pergunta}`, menuResp(ctx.session.perguntas[0]))
+    await ctx.editMessageText(`${ctx.session.perguntas[0].pergunta}`, menuResp(ctx.session.perguntas[0]))
 })
 
 bot.action(/her/, async ctx => {
     ctx.session.perguntas = perguntas_array.filter(item => item.assunto == 'her')
-    await ctx.reply(ctx.session.perguntas[0].pergunta, menuResp(ctx.session.perguntas[0]))
+    await ctx.editMessageText(ctx.session.perguntas[0].pergunta, menuResp(ctx.session.perguntas[0]))
 })
 
 bot.action(/true/, async ctx => {
@@ -95,10 +95,10 @@ bot.action(/true/, async ctx => {
     }
 
     if (ctx.session.perguntas[0]) {
-        await ctx.reply('Muito bem! Você é o cara!')
-        await ctx.reply(`${ctx.session.perguntas[0].pergunta}`, menuResp(ctx.session.perguntas[0]))
+        await ctx.answerCbQuery('Muito bem! Você é o cara!')
+        await ctx.editMessageText(`${ctx.session.perguntas[0].pergunta}`, menuResp(ctx.session.perguntas[0]))
     } else {
-        await ctx.reply('Parabéns, você concluiu as questões!')
+        await ctx.editMessageText('Parabéns, você concluiu as questões!')
         await ctx.reply(`Pontos: ${ctx.session.pontos}`)
         await ctx.reply(`Erros: ${ctx.session.erros}`)
     }
@@ -106,8 +106,7 @@ bot.action(/true/, async ctx => {
 
 bot.action(/false/, async ctx => {
     ctx.session.erros += 1
-    await ctx.reply('Ops! Acho que não é essa, pense um pouco mais!')
-    await ctx.reply(`${ctx.session.perguntas[0].pergunta}`, menuResp(ctx.session.perguntas[0]))
+    await ctx.answerCbQuery('Ops! Acho que não é essa, pense um pouco mais!')
 })
 
 bot.startPolling()
